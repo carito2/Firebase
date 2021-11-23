@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { firestore } from "./firebase.js"
 
 function App() {
+  const [data, setData] = useState("");
 
   useEffect(()=>{
     firestore
@@ -11,7 +12,8 @@ function App() {
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
-        console.log(doc.data());
+        console.log(doc.data())
+        setData(doc.data());
       })
     })
   }, [])
@@ -20,17 +22,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div>
+          <h2>Autor: {data.autor}</h2>
+          <p>Mensaje: {data.tweet}</p>
+        </div>
       </header>
     </div>
   );
