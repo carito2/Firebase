@@ -1,9 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useEffect} from "react";
-import {firestore} from "./firebase"
+import { firestore } from "./firebase.js"
 
 function App() {
+
+  useEffect(()=>{
+    firestore
+    .collection("tweets")
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        console.log(doc.data());
+      })
+    })
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
