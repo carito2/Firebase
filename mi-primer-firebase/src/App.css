@@ -27,5 +27,14 @@
 .tweetsCard {
   border: 2px solid #ffff;
   margin: 10px;
+  padding: 10px;
+}
+
+.deleteTweet {
+  border-radius: 10px;
+  color: white;
   padding: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: red;
 }

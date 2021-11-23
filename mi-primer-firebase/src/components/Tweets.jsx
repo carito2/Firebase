@@ -1,6 +1,6 @@
 import React from "react"
 
-function Tweets ({tweets}) {
+function Tweets ({tweets, deleteTweet}) {
     return (
         <>
             <h1>Tweets:</h1>
@@ -8,8 +8,8 @@ function Tweets ({tweets}) {
                 console.log(tweets);
                 return(
                 <div key={tweet.id} className="tweetsCard">
-                    <h2>Autor: {tweet.autor}</h2>
-                    <p>Mensaje: {tweet.tweet}</p>
+                    <h3>Autor: {tweet.autor}</h3>
+                    <p>Mensaje: {tweet.tweet} <span className="deleteTweet" onClick={() => deleteTweet(tweet.id)}>x</span></p>
                 </div>
                 )  
             })
