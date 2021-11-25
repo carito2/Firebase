@@ -11,20 +11,20 @@ function App() {
   });
 
   useEffect(()=>{
-    firestore
-    .collection("tweets")
-    .get()
-    .then((snapshot) => {
-      const tweets = snapshot.docs.map((doc) => {
-        console.log(doc.data())
-        return {
-          autor: doc.data().autor,
-          tweet: doc.data().tweet,
-          id: doc.id
-        }
-      })
-      setTweets(tweets);
+    const unsubscribe = firestore
+      .collection("tweets")
+      .onSnapshot((snapshot) => {
+        const tweets = snapshot.docs.map((doc) => {
+          console.log(doc.data())
+          return {
+            autor: doc.data().autor,
+            tweet: doc.data().tweet,
+            id: doc.id
+          }
+        })
+        setTweets(tweets);
     });
+    return () => unsubscribe();
   }, [])
 
   const handleChange = (e) => {
