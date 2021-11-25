@@ -67,8 +67,8 @@ function App() {
       <form className="appForm">
         <textarea cols="30" rows="5" placeholder="Escribe un tweet..." value={tweet.tweet} onChange={handleChange} name="tweet"></textarea>
         <div className="inputAndButton">
-          <input type="text" placeholder="Persona autora" value={tweet.autor} onChange={handleChange} name="autor"></input>
-          <button onClick={handleButton}>Enviar Tweet</button>
+          <input type="text" className="inputAutor" placeholder="Persona autora" value={tweet.autor} onChange={handleChange} name="autor"></input>
+          <button className="button" onClick={handleButton}>Enviar Tweet</button>
         </div>
       </form>
       <Tweets tweets={tweets} deleteTweet={deleteTweet}/>
