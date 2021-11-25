@@ -1,6 +1,8 @@
 import React from "react"
+import dislike from "../images/dislike.png"
+import like from "../images/like.png"
 
-function Tweets ({tweets, deleteTweet}) {
+function Tweets ({tweets, deleteTweet, updateTweet}) {
     return (
         <div className="resultTweets">
             <h1>Tweets:</h1>
@@ -12,7 +14,10 @@ function Tweets ({tweets, deleteTweet}) {
                         <p>{tweet.tweet} </p>
                         <p>Por: @{tweet.autor}</p>
                     </div>
-                    <button className="deleteTweet" onClick={() => deleteTweet(tweet.id)}>Borrar</button>
+                    <div className="editTweet">
+                        <img src={tweet.like ? like : dislike} alt="Imagen de corazón" className="liked" name="like" onClick={() => updateTweet(tweet.id, tweet.like)}/>
+                        <button className="deleteTweet" onClick={() => deleteTweet(tweet.id)}>Borrar</button>
+                    </div>
                 </div>
                 )  
             })

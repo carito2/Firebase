@@ -7,7 +7,8 @@ function App() {
   const [tweets, setTweets] = useState([]);
   const [tweet, setTweet] = useState({
     tweet: "",
-    autor: ""
+    autor: "",
+    like: false,
   });
 
   useEffect(()=>{
@@ -19,6 +20,7 @@ function App() {
           return {
             autor: doc.data().autor,
             tweet: doc.data().tweet,
+            like: doc.data().like,
             id: doc.id
           }
         })
@@ -48,18 +50,34 @@ function App() {
       let newTweet = {
         autor: doc.data().autor,
         tweet: doc.data().tweet,
+        like: doc.data().like,
         id: doc.id
       }
 //Paso 4 Seteamos Tweets
       setTweets([newTweet, ...tweets]);
     })
   }
+
   const deleteTweet = (id) => {
     const newTweets = tweets.filter((tweet) => {
       return tweet.id !== id;
     })
     setTweets(newTweets);
     firestore.doc(`tweets/${id}`).delete();
+  }
+
+  const updateTweet = (id, like) => {
+    const modifiedTweet = firestore.doc(`tweets/${id}`);
+    modifiedTweet
+      .update({
+        like: !like
+      })
+      .then(() => {
+        console.log("Documento actualizado"); // Documento actualizado
+      })
+      .catch((error) => {
+        console.error("Error de actualización de doumento", error);
+      });	
   }
 
   return (
@@ -71,7 +89,7 @@ function App() {
           <button className="button" onClick={handleButton}>Enviar Tweet</button>
         </div>
       </form>
-      <Tweets tweets={tweets} deleteTweet={deleteTweet}/>
+      <Tweets tweets={tweets} deleteTweet={deleteTweet} updateTweet={updateTweet}/>
     </div>
   );
 }

@@ -57,6 +57,17 @@
 
 }
 
+.liked {
+  height: 18px;
+  width: 18px;
+}
+
+.editTweet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .deleteTweet {
   border-radius: 10px;
   border: none;
