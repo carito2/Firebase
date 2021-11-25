@@ -35,6 +35,11 @@
 
 .button {
   padding: 5px;
+  border: none;
+  border-radius: 10px;
+  color: #ffff;
+  background-color:tomato;
+  margin-left: 10px;
 }
 
 .resultTweets {
