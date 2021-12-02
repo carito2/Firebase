@@ -1,6 +1,6 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
-import { firestore } from "./firebase.js"
+import { firestore, loginConGoogle, auth, logout } from "./firebase.js"
 import Tweets from "./components/Tweets"
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
     autor: "",
     like: false,
   });
+  const [user, setUser] = useState(null);
 
   useEffect(()=>{
     const unsubscribe = firestore
@@ -21,10 +22,15 @@ function App() {
             autor: doc.data().autor,
             tweet: doc.data().tweet,
             like: doc.data().like,
+            numLike: doc.data().numLike,
             id: doc.id
           }
         })
         setTweets(tweets);
+    });
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+      console.log(user);
     });
     return () => unsubscribe();
   }, [])
@@ -51,6 +57,7 @@ function App() {
         autor: doc.data().autor,
         tweet: doc.data().tweet,
         like: doc.data().like,
+        numLike: doc.data().numLike,
         id: doc.id
       }
 //Paso 4 Seteamos Tweets
@@ -66,14 +73,13 @@ function App() {
     firestore.doc(`tweets/${id}`).delete();
   }
 
-  const updateTweet = (id, like) => {
+  const updateTweet = (id, numLike) => {
+    if (!numLike) numLike=0;
     const modifiedTweet = firestore.doc(`tweets/${id}`);
     modifiedTweet
       .update({
-        like: !like
-      })
-      .then(() => {
-        console.log("Documento actualizado"); // Documento actualizado
+        like: true,
+        numLike: numLike + 1
       })
       .catch((error) => {
         console.error("Error de actualización de doumento", error);
@@ -82,6 +88,17 @@ function App() {
 
   return (
     <div className="App">
+      {user ? (
+        <>
+          <div className="userProfile">
+            <img className="userProfilePicture" src={user.photoURL} alt="Foto de perfil"/>
+            <p>¡Hola {user.displayName}!</p>
+            <button className="logoutButton" onClick={logout}>Log Out</button>
+          </div>
+        </>
+      ) : (
+        <button className="loginButton" onClick={loginConGoogle}>Login con Google</button>
+      )}
       <form className="appForm">
         <textarea cols="30" rows="5" placeholder="Escribe un tweet..." value={tweet.tweet} onChange={handleChange} name="tweet"></textarea>
         <div className="inputAndButton">

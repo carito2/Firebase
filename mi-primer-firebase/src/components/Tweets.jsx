@@ -15,7 +15,7 @@ function Tweets ({tweets, deleteTweet, updateTweet}) {
                         <p>Por: @{tweet.autor}</p>
                     </div>
                     <div className="editTweet">
-                        <img src={tweet.like ? like : dislike} alt="Imagen de corazón" className="liked" name="like" onClick={() => updateTweet(tweet.id, tweet.like)}/>
+                        <img src={tweet.like ? like : dislike} alt="Imagen de corazón" className="liked" name="like" onClick={() => updateTweet(tweet.id, tweet.numLike)}/> <span>{tweet.numLike && tweet.numLike}</span>
                         <button className="deleteTweet" onClick={() => deleteTweet(tweet.id)}>Borrar</button>
                     </div>
                 </div>
